@@ -1,7 +1,8 @@
 require "has_attachable/version"
+require "has_attachable/processing"
 
 module HasAttachable
-extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
   class NoUploaderError < StandardError
     def message
