@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = HasAttachable::VERSION
   spec.authors       = ["Zack Siri"]
   spec.email         = ["zack@artellectual.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{gem for managing async uploading to S3 and background processing with sidekiq}
+  spec.summary       = %q{for managing async uploading}
   spec.homepage      = ""
   spec.license       = "MIT"
 
