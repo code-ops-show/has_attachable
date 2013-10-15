@@ -3,7 +3,7 @@ module HasAttachable
     extend ActiveSupport::Concern
 
     def attachable_job
-      JobStatus.new(AttachableWorker.sidekiq_options["queue"].to_s, 
+      HasAttachable::Status.new(HasAttachable::Worker.sidekiq_options["queue"].to_s, 
                         self.class.name.downcase, self.id)
     end
 
@@ -43,9 +43,6 @@ module HasAttachable
       remove_attachable
     end
 
-    def attachable_status_path
-      "/monitor/#{AttachableWorker.sidekiq_options['queue'].to_s}/#{self.class.name.downcase}/#{self.id}"
-    end
 
     def processing_options
       {

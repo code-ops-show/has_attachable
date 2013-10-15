@@ -1,5 +1,7 @@
 require "has_attachable/version"
 require "has_attachable/processing"
+require "has_attachable/worker"
+require "has_attachable/status"
 
 module HasAttachable
   extend ActiveSupport::Concern
@@ -12,14 +14,14 @@ module HasAttachable
 
   included do 
     after_update -> {
-      AttachableWorker.
+      HasAttachable::Worker.
         perform_async('process', 
                        processing_options) if process_attachable?
-      AttachableWorker.
+      HasAttachable::Worker.
         perform_async('remove', 
                        processing_options) if remove_attachable?
     }
-    include Attachable::Processing
+    include HasAttachable::Processing
   end
 
   module ClassMethods
