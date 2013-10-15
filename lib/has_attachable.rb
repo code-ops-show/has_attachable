@@ -46,7 +46,6 @@ module HasAttachable
       
 
       class_eval do 
-        attr_accessible "async_remove_#{field}".to_sym, "#{field}_name".to_sym
         attr_accessor "async_remove_#{field}".to_sym
 
         mount_uploader field, 
