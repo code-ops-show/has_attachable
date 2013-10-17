@@ -10,7 +10,7 @@ module HasAttachable
     end
 
     def process(options)
-      object = options[:klass].classify.constantize.unscoped.all.where(id: options[:id]).first
+      object = options[:klass].classify.constantize.unscoped.where(id: options[:id]).first
       object.send(options[:context]).cache_stored_file! 
       object.send(options[:context]).retrieve_from_cache!(object.send(options[:context]).cache_name)
       object.send(options[:context]).recreate_versions!
@@ -18,7 +18,7 @@ module HasAttachable
     end
 
     def remove(options)
-      object = options[:klass].classify.constantize.unscoped.all.where(id: options[:id]).first
+      object = options[:klass].classify.constantize.unscoped.where(id: options[:id]).first
       object.send("remove_#{options[:context]}!")
       object.save!
     end

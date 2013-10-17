@@ -13,14 +13,14 @@ module HasAttachable
   end
 
   included do 
-    after_update -> {
+    after_commit -> {
       HasAttachable::Worker.
         perform_async('process', 
                        processing_options) if process_attachable?
       HasAttachable::Worker.
         perform_async('remove', 
                        processing_options) if remove_attachable?
-    }
+    }, on: :update
     include HasAttachable::Processing
   end
 
