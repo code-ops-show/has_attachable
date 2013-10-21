@@ -3,7 +3,7 @@ module HasAttachable
     extend ActiveSupport::Concern
 
     def attachable_job
-      HasAttachable::Status.new(HasAttachable::Worker.sidekiq_options["queue"].to_s, 
+      HasAttachable::Status.new(HasAttachable::Worker.sidekiq_options_hash["queue"].to_s, 
                         self.class.name.downcase, self.id)
     end
 
@@ -17,6 +17,15 @@ module HasAttachable
         send("#{field}_name_changed?") and \
         send("#{field}_name").present? ? true : false
       end
+    end
+
+    def run_process_attachable
+      HasAttachable::Worker.perform_async('process', processing_options)
+    end
+
+    def run_remove_attachable
+      self.update_attribute("#{get_remove_attachable}_name", nil)
+      HasAttachable::Worker.perform_async('remove', processing_options)
     end
 
     def remove_attachable?

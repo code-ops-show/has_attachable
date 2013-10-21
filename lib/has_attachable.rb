@@ -13,14 +13,9 @@ module HasAttachable
   end
 
   included do 
-    after_commit -> {
-      HasAttachable::Worker.
-        perform_async('process', 
-                       processing_options) if process_attachable?
-      HasAttachable::Worker.
-        perform_async('remove', 
-                       processing_options) if remove_attachable?
-    }, on: :update
+    after_update :run_process_attachable, if: :process_attachable?
+    after_update :run_remove_attachable,  if: :remove_attachable?
+    
     include HasAttachable::Processing
   end
 
