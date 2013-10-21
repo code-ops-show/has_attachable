@@ -1,7 +1,6 @@
 require "has_attachable/version"
 require "has_attachable/processing"
 require "has_attachable/worker"
-require "has_attachable/status"
 
 module HasAttachable
   extend ActiveSupport::Concern

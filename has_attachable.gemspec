@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
   spec.add_dependency 'sidekiq'
+  spec.add_dependency 'sidekiq-status'
   spec.add_dependency 'carrierwave'
   spec.add_dependency 'rails', '~> 4.0.0'
 end

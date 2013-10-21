@@ -1,8 +1,11 @@
 require 'sidekiq'
+require 'sidekiq-status'
 
 module HasAttachable
   class Worker
     include Sidekiq::Worker
+    include Sidekiq::Status::Worker
+
     sidekiq_options queue: :has_attachable
     
     def perform(method, options)
