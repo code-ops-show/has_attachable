@@ -44,6 +44,14 @@ module HasAttachable
       class_eval do 
         attr_accessor "async_remove_#{field}".to_sym
 
+        define_method("#{field}_processing?") { 
+          if self.send("#{field}_job_id").present? 
+            not Sidekiq::Status::complete? self.send("#{field}_job_id")
+          else
+            false
+          end
+        }
+
         mount_uploader field, 
                        attachable_options[field][:uploader], 
                        mount_on: "#{field}_name"
