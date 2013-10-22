@@ -26,13 +26,17 @@ module HasAttachable
     end
 
     def track_job_id(job_id)
-      binding.remote_pry
       self.update_column "#{attachable_field}_job_id", job_id
+    end
+
+    def untrack_job_id(context)
+      self.update_column "#{context}_job_id", nil
     end
 
     def attachable_field
       get_changed_attachable || get_remove_attachable
     end
+
 
     def remove_attachable?
       field = get_remove_attachable
